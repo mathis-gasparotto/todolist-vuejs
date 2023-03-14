@@ -3,7 +3,7 @@
     <div>
       <p :class="'content' + (item.done ? ' done' : '')" v-if="!isEditing">{{ item.content }}</p>
       <form v-else @submit.prevent="onSubmit">
-        <input type="text" v-model="item.content">
+        <input type="text" v-model="inputValue">
         <button type="submit">Update</button>
       </form>
     </div>
@@ -25,13 +25,17 @@ export default {
   },
   data () {
     return {
-      isEditing: false
+      isEditing: false,
+      inputValue: ''
     }
+  },
+  created () {
+    this.inputValue = this.item.content
   },
   methods: {
     onSubmit () {
       this.isEditing = false
-      this.$emit('updateTodo', this.item.id, this.item.content)
+      this.$emit('updateTodo', this.item.id, this.inputValue)
     }
   }
   
