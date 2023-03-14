@@ -40,6 +40,9 @@ export default {
       this.todos = []
     },
     createTodo (content) {
+      if(!content) {
+        return
+      }
       this.inputValue = ''
       this.todos.push({
         id: this.todoId(),
