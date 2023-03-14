@@ -40,6 +40,7 @@ export default {
       this.todos = []
     },
     createTodo (content) {
+      content = content.trim()
       if(!content) {
         return
       }
