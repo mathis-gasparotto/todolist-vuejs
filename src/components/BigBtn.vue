@@ -1,5 +1,5 @@
 <template>
-  <button class="big-btn" @click="$emit('onClick')">
+  <button type="button" class="big-btn" @click="$emit('onClick')">
     {{ content }}
   </button>
 </template>
@@ -16,7 +16,7 @@ export default {
 <style scoped lang="scss">
 .big-btn {
   display: block;
-  padding: 10px 15px;
+  padding: 7px 15px;
   color: white;
   background-color: #41b883;
 }

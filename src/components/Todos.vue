@@ -5,7 +5,7 @@
     <button type="submit">Add</button>
   </form>
   <div class="todo-list">
-    <TodoItem v-for="todo in todos" :key="todo.id" :item="todo" @clickTodo="(id) => clickTodo(id)" @updateTodo="(id, content) => updateTodo(id, content)" @deleteTodo="(id) => deleteTodo(id)" />
+    <TodoItem v-for="todo in todos" :key="todo.id" :item="todo" @toggleTodo="(id) => toggleTodo(id)" @updateTodo="(id, content) => updateTodo(id, content)" @deleteTodo="(id) => deleteTodo(id)" />
   </div>
   <div class="btns">
     <BigBtn content="Clear List" @click="clearList" />
@@ -29,35 +29,41 @@ export default {
       inputValue: ''
     }
   },
-  computed: {
-    todoId () {
-      this.tempId++
-      return this.tempId
-    }
-  },
   methods: {
     deleteTodo (todoId) {
-      this.todo = this.todos.filter( (todo) => todo.id !== todoId)
+      this.todos = this.todos.filter( (todo) => todo.id !== todoId)
     },
     clearList () {
-      this.todo = this.todos.filter( (todo) => !todo.done)
+      this.todos = this.todos.filter( (todo) => !todo.done)
     },
     completeClear () {
-      this.todo = []
+      this.todos = []
     },
     createTodo (content) {
       this.inputValue = ''
       this.todos.push({
-        id: this.todoId,
+        id: this.todoId(),
         content,
         done: false
       })
     },
     updateTodo (id, content) {
-
+      this.todos.forEach((e) => {
+        if (e.id === id) {
+          e.content = content
+        }
+      })
     },
-    clickTodo (id) {
-
+    toggleTodo (id) {
+      this.todos.forEach((e) => {
+        if (e.id === id) {
+          e.done = !e.done
+        }
+      })
+    },
+    todoId () {
+      this.tempId = this.tempId + 1
+      return this.tempId
     }
   }
 }

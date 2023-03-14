@@ -1,15 +1,15 @@
 <template>
   <div class="todo-item">
     <div>
-      <p :class="'content' + {' done' : item.done}" v-if="!isEditing">{{ item.content }}</p>
+      <p :class="'content' + (item.done ? ' done' : '')" v-if="!isEditing">{{ item.content }}</p>
       <form v-else @submit.prevent="onSubmit">
         <input type="text" v-model="inputValue">
         <button type="submit">Update</button>
       </form>
     </div>
-    <LittleBtn :content="item.done ? 'To do' : 'Done'" @click="$emit('clickTodo', item.id)" />
-    <LittleBtn content="Update" @click="isEditing = true" />
-    <LittleBtn content="Delete" @click="$emit('deleteTodo', item.id)" />
+    <LittleBtn :content="item.done ? 'To do' : 'Done'" @onClick="$emit('toggleTodo', item.id)" />
+    <LittleBtn content="Update" @onClick="isEditing = true" />
+    <LittleBtn content="Delete" @onClick="$emit('deleteTodo', item.id)" />
   </div>
 </template>
 
@@ -38,6 +38,7 @@ export default {
       this.$emit('updateTodo', this.item.id, this.inputValue)
     }
   }
+  
 }
 </script>
 
@@ -46,7 +47,7 @@ export default {
   display: flex;
   gap: 10px;
   .content {
-    .done {
+    &.done {
       text-decoration: line-through;
     }
   }
