@@ -31,7 +31,12 @@ export default {
   },
   methods: {
     deleteTodo (todoId) {
-      this.todos = this.todos.filter( (todo) => todo.id !== todoId)
+      
+      this.todos.forEach((todo, index) => {
+        if (todo.id === todoId) {
+          this.todos.splice(index, 1)
+        }
+      })
     },
     clearList () {
       this.todos = this.todos.filter( (todo) => !todo.done)
