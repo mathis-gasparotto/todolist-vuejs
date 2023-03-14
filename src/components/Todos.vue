@@ -4,8 +4,13 @@
     <input type="text" v-model="inputValue">
     <button type="submit">Add</button>
   </form>
+  <h2>To Do</h2>
   <div class="todo-list">
-    <TodoItem v-for="todo in todos" :key="todo.id" :item="todo" @toggleTodo="(id) => toggleTodo(id)" @updateTodo="(id, content) => updateTodo(id, content)" @deleteTodo="(id) => deleteTodo(id)" />
+    <TodoItem v-for="todo in todosTodo" :key="todo.id" :item="todo" @toggleTodo="(id) => toggleTodo(id)" @updateTodo="(id, content) => updateTodo(id, content)" @deleteTodo="(id) => deleteTodo(id)" />
+    </div>
+  <h2>Done</h2>
+  <div class="done-list">
+    <TodoItem v-for="todo in todosDone" :key="todo.id" :item="todo" @toggleTodo="(id) => toggleTodo(id)" @updateTodo="(id, content) => updateTodo(id, content)" @deleteTodo="(id) => deleteTodo(id)" />
   </div>
   <div class="btns">
     <BigBtn content="Clear List" @click="clearList" />
@@ -27,6 +32,14 @@ export default {
       todos: [],
       tempId: 0,
       inputValue: ''
+    }
+  },
+  computed: {
+    todosTodo () {
+      return this.todos.filter((e) => !e.done)
+    },
+    todosDone () {
+      return this.todos.filter((e) => e.done)
     }
   },
   methods: {
