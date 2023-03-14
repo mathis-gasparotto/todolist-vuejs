@@ -1,6 +1,6 @@
 <template>
   <h1 class="title">To Do List</h1>
-  <SearchBar @search="(str) => strToSeach = str" />
+  <input type="text" v-model="strToSeach" placeholder="Search...">
   <form @submit.prevent="createTodo(inputValue)">
     <input type="text" v-model="inputValue">
     <button type="submit">Add</button>
@@ -22,13 +22,11 @@
 <script>
 import TodoItem from './TodoItem.vue'
 import BigBtn from './BigBtn.vue'
-import SearchBar from './SearchBar.vue'
 export default {
   name: 'Todos',
   components: {
     TodoItem,
-    BigBtn,
-    SearchBar
+    BigBtn
   },
   data () {
     return {
