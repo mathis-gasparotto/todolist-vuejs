@@ -70,18 +70,10 @@ export default {
       })
     },
     updateTodo (id, content) {
-      this.todos.forEach((e) => {
-        if (e.id === id) {
-          e.content = content
-        }
-      })
+      this.todos.find((e) => e.id === id).content = content
     },
     toggleTodo (id) {
-      this.todos.forEach((e) => {
-        if (e.id === id) {
-          e.done = !e.done
-        }
-      })
+      this.todos.find((e) => e.id === id).done = !this.todos.find((e) => e.id === id).done
     },
     todoId () {
       this.tempId = this.tempId + 1
