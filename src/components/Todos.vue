@@ -1,86 +1,104 @@
 <template>
   <h1 class="title">To Do List</h1>
-  <input type="text" v-model="strToSeach" placeholder="Search...">
+  <input type="text" v-model="strToSeach" placeholder="Search..." />
   <form @submit.prevent="createTodo(inputValue)">
-    <input type="text" v-model="inputValue">
+    <input type="text" v-model="inputValue" />
     <button type="submit">Add</button>
   </form>
   <h2>To Do</h2>
   <div class="todo-list">
-    <TodoItem v-for="todo in todosTodo" :key="todo.id" :item="todo" @toggleTodo="(id) => toggleTodo(id)" @updateTodo="(id, content) => updateTodo(id, content)" @deleteTodo="(id) => deleteTodo(id)" />
-    </div>
+    <TodoItem
+      v-for="todo in todosTodo"
+      :key="todo.id"
+      :item="todo"
+      @toggleTodo="(id) => toggleTodo(id)"
+      @updateTodo="(id, content) => updateTodo(id, content)"
+      @deleteTodo="(id) => deleteTodo(id)"
+    />
+  </div>
   <h2>Done</h2>
   <div class="done-list">
-    <TodoItem v-for="todo in todosDone" :key="todo.id" :item="todo" @toggleTodo="(id) => toggleTodo(id)" @updateTodo="(id, content) => updateTodo(id, content)" @deleteTodo="(id) => deleteTodo(id)" />
+    <TodoItem
+      v-for="todo in todosDone"
+      :key="todo.id"
+      :item="todo"
+      @toggleTodo="(id) => toggleTodo(id)"
+      @updateTodo="(id, content) => updateTodo(id, content)"
+      @deleteTodo="(id) => deleteTodo(id)"
+    />
   </div>
   <div class="btns">
     <BigBtn content="Clear List" @click="clearList" />
     <BigBtn content="Clear Complete" @click="completeClear" />
   </div>
 </template>
-  
+
 <script>
-import TodoItem from './TodoItem.vue'
-import BigBtn from './BigBtn.vue'
+import TodoItem from "./TodoItem.vue";
+import BigBtn from "./BigBtn.vue";
 export default {
-  name: 'Todos',
+  name: "Todos",
   components: {
     TodoItem,
-    BigBtn
+    BigBtn,
   },
-  data () {
+  data() {
     return {
       todos: [],
       tempId: 0,
-      inputValue: '',
-      strToSeach: ''
-    }
+      inputValue: "",
+      strToSeach: "",
+    };
   },
   computed: {
-    searchedTodo () {
-      return this.strToSeach.length ? this.todos.filter((e) => e.content.search(this.strToSeach) !== -1) : this.todos
+    searchedTodo() {
+      return this.strToSeach.length
+        ? this.todos.filter((e) => e.content.search(this.strToSeach) !== -1)
+        : this.todos;
     },
-    todosTodo () {
-      return this.searchedTodo.filter((e) => !e.done)
+    todosTodo() {
+      return this.searchedTodo.filter((e) => !e.done);
     },
-    todosDone () {
-      return this.searchedTodo.filter((e) => e.done)
-    }
+    todosDone() {
+      return this.searchedTodo.filter((e) => e.done);
+    },
   },
   methods: {
-    deleteTodo (todoId) {
-      this.todos = this.todos.filter((e) => e.id !== todoId)
+    deleteTodo(todoId) {
+      this.todos = this.todos.filter((e) => e.id !== todoId);
     },
-    clearList () {
-      this.todos = this.todos.filter( (todo) => !todo.done)
+    clearList() {
+      this.todos = [];
     },
-    completeClear () {
-      this.todos = []
+    completeClear() {
+      this.todos = this.todos.filter((todo) => !todo.done);
     },
-    createTodo (content) {
-      content = content.trim()
-      if(!content) {
-        return
+    createTodo(content) {
+      content = content.trim();
+      if (!content) {
+        return;
       }
-      this.inputValue = ''
+      this.inputValue = "";
       this.todos.push({
         id: this.todoId(),
         content,
-        done: false
-      })
+        done: false,
+      });
     },
-    updateTodo (id, content) {
-      this.todos.find((e) => e.id === id).content = content
+    updateTodo(id, content) {
+      this.todos.find((e) => e.id === id).content = content;
     },
-    toggleTodo (id) {
-      this.todos.find((e) => e.id === id).done = !this.todos.find((e) => e.id === id).done
+    toggleTodo(id) {
+      this.todos.find((e) => e.id === id).done = !this.todos.find(
+        (e) => e.id === id
+      ).done;
     },
-    todoId () {
-      this.tempId = this.tempId + 1
-      return this.tempId
-    }
-  }
-}
+    todoId() {
+      this.tempId = this.tempId + 1;
+      return this.tempId;
+    },
+  },
+};
 </script>
 
 <style scoped lang="scss">
